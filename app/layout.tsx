@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import "./globals.css";
+import Providers from "@/components/providers/nextauthProvder";
+import { getSession } from "@/auth"
 
 const geistSans = Poppins({
-  weight:["100","200","300","400","500","600","700","800"],
+  weight: ["100", "200", "300", "400", "500", "600", "700", "800"],
   subsets: ["latin"],
 });
 
@@ -13,17 +15,20 @@ export const metadata: Metadata = {
   description: "A Tool to Manage and Organize your Job Search",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const session = await getSession()
   return (
     <html lang="en">
       <body
         className={`${geistSans.className} antialiased`}
       >
-        {children}
+        <Providers session={session}>
+          {children}
+        </Providers>
       </body>
     </html>
   );

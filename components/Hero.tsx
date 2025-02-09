@@ -56,12 +56,12 @@ export default function Hero() {
                     </div>
                 </motion.div>
             </div>
-            <motion.div
+            {/* <motion.div
                 className="absolute bottom-0 left-0 w-full h-24 bg-gradient-to-t from-black to-transparent"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.5, delay: 0.8 }}
-            />
+            /> */}
         </section>
     )
 }

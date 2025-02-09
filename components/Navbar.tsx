@@ -5,9 +5,11 @@ import { motion } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { MenuIcon, XIcon } from "lucide-react"
 import type React from "react"
+import { signIn, signOut, useSession } from "next-auth/react"
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
+  const { data: session } = useSession()
 
   return (
     <motion.nav
@@ -26,11 +28,16 @@ export default function Navbar() {
             <NavItem href="#about">About</NavItem>
           </div>
           <div className="hidden md:flex space-x-4">
-            {/* <Button variant="ghost" className="text-white hover:text-blue-300">
-              Login
-            </Button> */}
-            <Button className="bg-blue-500 text-white hover:bg-blue-600">Sign Up</Button>
+            {session?.user?.email ?
+              <Button onClick={() => { signOut() }} variant="destructive" className="text-white hover:text-blue-300">
+                Logout
+              </Button>
+              :
+              <Button className="bg-blue-500 text-white hover:bg-blue-600" onClick={() => { signIn('google') }}>Sign Up</Button>
+            }
+
           </div>
+          {/* {signIn()} */}
           <button className="md:hidden text-white" onClick={() => setIsOpen(!isOpen)}>
             {isOpen ? <XIcon /> : <MenuIcon />}
           </button>
@@ -49,7 +56,7 @@ export default function Navbar() {
             {/* <Button variant="ghost" className="text-white hover:text-blue-300">
               Login
             </Button> */}
-            <Button className="bg-blue-500 text-white hover:bg-blue-600">Sign Up</Button>
+            <Button className="bg-blue-500 text-white hover:bg-blue-600" onClick={() => { signIn('google') }}>Sign Up</Button>
           </div>
         </motion.div>
       )}

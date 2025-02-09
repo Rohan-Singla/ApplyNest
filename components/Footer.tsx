@@ -3,7 +3,7 @@ import React from "react";
 
 const Footer: React.FC = () => {
   return (
-    <footer className="bg-black text-white py-6">
+    <footer className="bg-black text-white py-6 mt-20">
       <div className="container mx-auto flex flex-col md:flex-row justify-between items-center px-4">
         <div className="text-center md:text-left mb-4 md:mb-0">
           <h3 className="text-2xl font-bold text-blue-400">ApplyNest</h3>

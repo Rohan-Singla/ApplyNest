@@ -4,7 +4,7 @@ import { useState } from "react"
 import { motion } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { MenuIcon, XIcon } from "lucide-react"
-import type React from "react" 
+import type React from "react"
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
@@ -23,13 +23,12 @@ export default function Navbar() {
           </motion.div>
           <div className="hidden md:flex space-x-8">
             <NavItem href="#features">Features</NavItem>
-            <NavItem href="#pricing">Pricing</NavItem>
             <NavItem href="#about">About</NavItem>
           </div>
           <div className="hidden md:flex space-x-4">
-            <Button variant="ghost" className="text-white hover:text-blue-300">
+            {/* <Button variant="ghost" className="text-white hover:text-blue-300">
               Login
-            </Button>
+            </Button> */}
             <Button className="bg-blue-500 text-white hover:bg-blue-600">Sign Up</Button>
           </div>
           <button className="md:hidden text-white" onClick={() => setIsOpen(!isOpen)}>
@@ -46,11 +45,10 @@ export default function Navbar() {
         >
           <div className="flex flex-col space-y-4">
             <NavItem href="#features">Features</NavItem>
-            <NavItem href="#pricing">Pricing</NavItem>
             <NavItem href="#about">About</NavItem>
-            <Button variant="ghost" className="text-white hover:text-blue-300">
+            {/* <Button variant="ghost" className="text-white hover:text-blue-300">
               Login
-            </Button>
+            </Button> */}
             <Button className="bg-blue-500 text-white hover:bg-blue-600">Sign Up</Button>
           </div>
         </motion.div>
@@ -63,7 +61,7 @@ function NavItem({ href, children }: { href: string; children: React.ReactNode }
   return (
     <motion.a
       href={href}
-      className="text-white hover:text-blue-300 transition-colors"
+      className="text-white hover:text-blue-300 transition-colors text-lg font-semibold tracking-wider"
       whileHover={{ scale: 1.1 }}
       whileTap={{ scale: 0.95 }}
     >

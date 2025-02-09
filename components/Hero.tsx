@@ -8,7 +8,7 @@ import jobimage from "@/public/images/hero-job.png"
 
 export default function Hero() {
     return (
-        <section className="relative min-h-[100dvh] flex justify-center">
+        <section className="relative max-h-[95dvh] flex justify-center">
             <div className="container px-4 h-[100dvh] mt-24 md:mt-0 flex flex-col md:flex-row items-center w-full justify-start md:justify-between">
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
@@ -17,20 +17,18 @@ export default function Hero() {
                     className="max-w-3xl mx-auto"
                 >
                     <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight text-white">
-                        Track Your
-                        <span className="text-blue-500"> Job Search</span>
-                        <br />
-                        Journey
+                        Track and Organize Your
+                        <span className="text-blue-500"> Job Search </span>
                     </h1>
-                    <p className="text-xl mb-8 text-gray-300">
-                        Organize applications, manage interviews, and land your dream job with ease.
+                    <p className="text-xl mb-8 text-gray-300 leading-relaxed">
+                        Effortlessly track and manage your job applications in one place. Stay organized, focused, and one step closer to your next opportunity.
                     </p>
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.5, delay: 0.2 }}
                     >
-                        <Button size="lg" className="bg-blue-500 text-white hover:bg-blue-600 transition-colors group">
+                        <Button size="lg" className="bg-blue-500 text-white hover:bg-blue-600 transition-colors group text-lg">
                             Get Started
                             <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
                         </Button>

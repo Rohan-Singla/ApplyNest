@@ -16,13 +16,18 @@ const authOptions: AuthOptions = {
 
     callbacks: {
         async signIn({ user }) {
-            if (user.email) {
+            if (user.name && user.email) {
                 try {
-                    await db.insert(users).values({ name: user.name, email: user.email, });
-                    console.log("User Signed Up Successfully!")
+                    await db.insert(users).values({
+                        name: user.name,   // Now guaranteed to be a string
+                        email: user.email, // Now guaranteed to be a string
+                    });
+                    console.log("User Signed Up Successfully!");
                 } catch (error) {
-                    console.error("User already exists or insertion failed:", error);
+                    console.error("Insertion failed:", error);
                 }
+            } else {
+                console.error("Name and email are required.");
             }
             return true;
         },

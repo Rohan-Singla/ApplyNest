@@ -1,6 +1,8 @@
 import GoogleProvider from "next-auth/providers/google";
 
 import { AuthOptions, getServerSession } from "next-auth"
+import { db } from "./app/db/drizzle";
+import { users } from "./app/db/schemas/user";
 
 const authOptions: AuthOptions = {
     // Configure one or more authentication providers
@@ -11,6 +13,20 @@ const authOptions: AuthOptions = {
         })
     ],
     secret: process.env.NEXTAUTH_SECRET,
+
+    callbacks: {
+        async signIn({ user }) {
+            if (user.email) {
+                try {
+                    await db.insert(users).values({ name: user.name, email: user.email, });
+                    console.log("User Signed Up Successfully!")
+                } catch (error) {
+                    console.error("User already exists or insertion failed:", error);
+                }
+            }
+            return true;
+        },
+    },
 }
 
 /**

@@ -53,10 +53,13 @@ export default function Navbar() {
           <div className="flex flex-col space-y-4">
             <NavItem href="#features">Features</NavItem>
             <NavItem href="#about">About</NavItem>
-            {/* <Button variant="ghost" className="text-white hover:text-blue-300">
-              Login
-            </Button> */}
-            <Button className="bg-blue-500 text-white hover:bg-blue-600" onClick={() => { signIn('google') }}>Sign Up</Button>
+            {session?.user?.email ?
+              <Button onClick={() => { signOut() }} variant="destructive" className="text-white hover:text-blue-300">
+                Logout
+              </Button>
+              :
+              <Button className="bg-blue-500 text-white hover:bg-blue-600" onClick={() => { signIn('google') }}>Sign Up</Button>
+            }
           </div>
         </motion.div>
       )}

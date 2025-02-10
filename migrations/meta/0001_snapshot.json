@@ -1,37 +1,45 @@
 {
-  "id": "1a5bd915-b377-4352-84ba-33fdf5874ee2",
-  "prevId": "00000000-0000-0000-0000-000000000000",
+  "id": "1f9881af-3c5c-4a77-990a-c81b5b64b70c",
+  "prevId": "1a5bd915-b377-4352-84ba-33fdf5874ee2",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
-    "public.todo": {
-      "name": "todo",
+    "public.users": {
+      "name": "users",
       "schema": "",
       "columns": {
         "id": {
           "name": "id",
-          "type": "integer",
+          "type": "serial",
           "primaryKey": true,
           "notNull": true
         },
-        "text": {
-          "name": "text",
+        "email": {
+          "name": "email",
           "type": "text",
           "primaryKey": false,
           "notNull": true
         },
-        "done": {
-          "name": "done",
-          "type": "boolean",
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
           "primaryKey": false,
-          "notNull": true,
-          "default": false
+          "notNull": false,
+          "default": "NOW()"
         }
       },
       "indexes": {},
       "foreignKeys": {},
       "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
+      "uniqueConstraints": {
+        "users_email_unique": {
+          "name": "users_email_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "email"
+          ]
+        }
+      },
       "policies": {},
       "checkConstraints": {},
       "isRLSEnabled": false

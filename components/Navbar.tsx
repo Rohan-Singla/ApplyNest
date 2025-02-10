@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button"
 import { MenuIcon, XIcon } from "lucide-react"
 import type React from "react"
 import { signIn, signOut, useSession } from "next-auth/react"
+import Link from "next/link"
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
@@ -26,10 +27,13 @@ export default function Navbar() {
           <div className="hidden md:flex space-x-8">
             <NavItem href="#features">Features</NavItem>
             <NavItem href="#about">About</NavItem>
+            {session?.user?.email &&
+              <NavItem href="/dashboard">Dashboard</NavItem>
+            }
           </div>
           <div className="hidden md:flex space-x-4">
             {session?.user?.email ?
-              <Button onClick={() => { signOut() }} variant="destructive" className="text-white hover:text-blue-300">
+              <Button onClick={() => { signOut() }} variant="destructive" className="text-white hover:text-red-600">
                 Logout
               </Button>
               :
@@ -53,6 +57,7 @@ export default function Navbar() {
           <div className="flex flex-col space-y-4">
             <NavItem href="#features">Features</NavItem>
             <NavItem href="#about">About</NavItem>
+            {session?.user?.email && <NavItem href="/dashboard">Dashboard</NavItem>}
             {session?.user?.email ?
               <Button onClick={() => { signOut() }} variant="destructive" className="text-white hover:text-blue-300">
                 Logout
@@ -69,14 +74,15 @@ export default function Navbar() {
 
 function NavItem({ href, children }: { href: string; children: React.ReactNode }) {
   return (
-    <motion.a
-      href={href}
-      className="text-white hover:text-blue-300 transition-colors text-lg font-semibold tracking-wider"
-      whileHover={{ scale: 1.1 }}
-      whileTap={{ scale: 0.95 }}
-    >
-      {children}
-    </motion.a>
+    <Link href={href}>
+      <motion.div
+        className="text-white hover:text-blue-300 transition-colors text-lg font-semibold tracking-wider"
+        whileHover={{ scale: 1.1 }}
+        whileTap={{ scale: 0.95 }}
+      >
+        {children}
+      </motion.div>
+    </Link>
   )
 }
 

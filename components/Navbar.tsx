@@ -33,7 +33,7 @@ export default function Navbar() {
           </div>
           <div className="hidden md:flex space-x-4">
             {session?.user?.email ?
-              <Button onClick={() => { signOut() }} variant="destructive" className="text-white hover:text-red-600">
+              <Button onClick={() => { signOut() }} className="text-white bg-red-600 hover:bg-red-500">
                 Logout
               </Button>
               :
@@ -59,7 +59,7 @@ export default function Navbar() {
             <NavItem href="#about">About</NavItem>
             {session?.user?.email && <NavItem href="/dashboard">Dashboard</NavItem>}
             {session?.user?.email ?
-              <Button onClick={() => { signOut() }} variant="destructive" className="text-white hover:text-blue-300">
+              <Button onClick={() => { signOut() }} className="text-white bg-red-600 hover:bg-red-500">
                 Logout
               </Button>
               :

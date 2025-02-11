@@ -1,33 +1,32 @@
 "use client"
-import { Home, FileText, BarChart2, Settings, Menu, LogOut } from "lucide-react"
-import Link from "next/link"
-import { useState } from "react"
-import type React from "react" // Added import for React
-
-import { Button } from "@/components/ui/button"
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
-import { signOut, useSession } from "next-auth/react"
-import { useRouter } from "next/navigation"
+import { Home, FileText, BarChart2, Settings, Menu, LogOut } from "lucide-react";
+import Link from "next/link";
+import { useEffect, useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { signOut, useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 const navItems = [
     { name: "Dashboard", icon: Home, href: "/" },
     { name: "Applications", icon: FileText, href: "/applications" },
     { name: "Analytics", icon: BarChart2, href: "/analytics" },
     { name: "Settings", icon: Settings, href: "/settings" },
-]
-
-const user = {
-    name: "John Doe",
-    email: "john@example.com",
-    avatarUrl: "/placeholder.svg",
-}
+];
 
 export function Layout({ children }: { children: React.ReactNode }) {
-    const [isOpen, setIsOpen] = useState(false)
-    const { data: session } = useSession()
-    const route = useRouter();
+    const [isOpen, setIsOpen] = useState(false);
+    const { data: session } = useSession();
+    const router = useRouter();
+
+    useEffect(() => {
+        if (!session) {
+            router.push("/")
+        }
+    }, [session]);
+
     return (
-        <div className="min-h-screen bg-black">
+        <div className="min-h-screen bg-black text-white">
             {/* Mobile Navigation */}
             <Sheet open={isOpen} onOpenChange={setIsOpen}>
                 <SheetTrigger asChild>
@@ -35,14 +34,14 @@ export function Layout({ children }: { children: React.ReactNode }) {
                         <Menu className="h-5 w-5" />
                     </Button>
                 </SheetTrigger>
-                <SheetContent side="left" className="w-64 p-0">
+                <SheetContent side="left" className="w-70 p-0 bg-zinc-900">
                     <div className="flex flex-col h-full">
                         <nav className="flex flex-col gap-4 p-4 flex-1">
                             {navItems.map((item) => (
                                 <Link
                                     key={item.name}
                                     href={item.href}
-                                    className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors  py-2 text-lg"
+                                    className="flex items-center gap-2 text-muted-foreground hover:text-blue-400 transition-colors py-2 text-lg"
                                     onClick={() => setIsOpen(false)}
                                 >
                                     <item.icon className="h-5 w-5" />
@@ -57,10 +56,9 @@ export function Layout({ children }: { children: React.ReactNode }) {
                                     <span className="text-sm font-medium text-white">{session?.user?.name}</span>
                                     <span className="text-xs text-zinc-400">{session?.user?.email}</span>
                                 </div>
-                                <LogOut className="h-4 w-4" onClick={() => {
-                                    signOut();
-                                    route.push("/")
-                                }} />
+                                <Button size="icon" className="bg-red-500 hover:bg-red-600" onClick={() => signOut()}>
+                                    <LogOut className="h-4 w-4 text-white" />
+                                </Button>
                             </div>
                         </div>
                     </div>
@@ -68,16 +66,16 @@ export function Layout({ children }: { children: React.ReactNode }) {
             </Sheet>
 
             {/* Desktop Navigation */}
-            <nav className="hidden md:flex fixed inset-y-0 flex-col w-64 p-4 border-r bg-zinc-900">
+            <nav className="hidden md:flex fixed inset-y-0 flex-col w-70 p-4 border-r bg-zinc-900">
                 <Link href="/" className="flex items-center gap-2 px-2 py-4">
-                    <span className="font-semibold text-2xl text-center text-white">ApplyNest</span>
+                    <span className="font-semibold text-2xl text-center text-blue-400">ApplyNest</span>
                 </Link>
                 <div className="flex flex-col gap-4 mt-8">
                     {navItems.map((item) => (
                         <Link
                             key={item.name}
                             href={item.href}
-                            className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors py-2 text-lg"
+                            className="flex items-center gap-2 text-muted-foreground hover:text-blue-400 transition-colors py-2 text-lg"
                         >
                             <item.icon className="h-5 w-5" />
                             {item.name}
@@ -91,11 +89,8 @@ export function Layout({ children }: { children: React.ReactNode }) {
                             <span className="text-sm font-medium text-white">{session?.user?.name}</span>
                             <span className="text-xs text-zinc-300">{session?.user?.email}</span>
                         </div>
-                        <Button variant="ghost" size="icon" className="ml-auto text-zinc-400 hover:text-white">
-                            <LogOut className="h-4 w-4" onClick={() => {
-                                signOut();
-                                route.push("/")
-                            }} />
+                        <Button size="sm" className="ml-auto text-white bg-red-500 hover:bg-red-600" onClick={() => signOut()}>
+                            <LogOut className="h-4 w-4" />
                         </Button>
                     </div>
                 </div>
@@ -104,6 +99,5 @@ export function Layout({ children }: { children: React.ReactNode }) {
             {/* Main Content */}
             <main className="md:pl-64 p-4 md:p-8">{children}</main>
         </div>
-    )
+    );
 }
-

@@ -1,15 +1,14 @@
 "use client"
 
 import { motion } from "framer-motion"
-import {  Plus, Search } from "lucide-react"
+import { Search } from "lucide-react"
 import { useState } from "react"
-
-import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Layout } from "@/components/providers/DashboardLayout"
 import { useSession } from "next-auth/react"
+import JobDetailsDialog from "@/components/Add-Application"
 
 const metrics = [
   {
@@ -54,7 +53,7 @@ const recentApplications = [
     jobtype: "remote",
     location: "USA",
     note: "",
-    priority:"Top"
+    priority: "Top"
   },
 ]
 
@@ -106,7 +105,7 @@ export default function Dashboard() {
             <CardContent className="p-6 space-y-4">
               <div className="flex items-center justify-between">
                 <h2 className="text-xl font-semibold">Recent Applications</h2>
-                <Button className="text-white">Add Application <Plus/></Button>
+                <JobDetailsDialog />
               </div>
 
               <div className="flex flex-col md:flex-row gap-4 items-center justify-between">

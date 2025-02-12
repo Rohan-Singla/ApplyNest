@@ -27,11 +27,14 @@ export function Layout({ children }: { children: React.ReactNode }) {
 
     return (
         <div className="min-h-screen bg-black text-white">
-            {/* Mobile Navigation */}
             <Sheet open={isOpen} onOpenChange={setIsOpen}>
+            {/* Mobile Navigation */}
+            <Link href="/" className="flex items-center gap-2 px-2 py-4 ">
+                <span className="font-semibold text-2xl text-right text-blue-400">ApplyNest</span>
+            </Link>
                 <SheetTrigger asChild>
-                    <Button variant="ghost" size="icon" className="md:hidden fixed top-4 left-4 z-50">
-                        <Menu className="h-5 w-5" />
+                    <Button variant="ghost" size="sm" className="md:hidden fixed top-4 right-4 z-50">
+                        <Menu size={20} />
                     </Button>
                 </SheetTrigger>
                 <SheetContent side="left" className="w-70 p-0 bg-zinc-900">

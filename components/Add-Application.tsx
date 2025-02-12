@@ -43,7 +43,7 @@ export default function JobDetailsDialog() {
             </DialogTrigger>
             <DialogContent className="sm:max-w-[600px] bg-zinc-900 text-white border-none">
                 <DialogHeader>
-                    <DialogTitle className="text-blue-500 text-xl">Add a New Job Application</DialogTitle>
+                    <DialogTitle className="sr-only">Add a New Job Application</DialogTitle>
                 </DialogHeader>
                 <form onSubmit={handleSubmit} className="grid gap-4 py-4">
                     <div className="flex flex-col gap-2">
@@ -99,12 +99,12 @@ export default function JobDetailsDialog() {
                         />
                     </div>
                     <div className="flex flex-col gap-2">
-                        <Label htmlFor="type" className="text-md">
+                        <Label htmlFor="locationtype" className="text-md">
                             Location Type
                         </Label>
-                        <Select onValueChange={handleSelectChange}>
+                        <Select onValueChange={(value) => setJobDetails((prev) => ({ ...prev, locationtype: value }))}>
                             <SelectTrigger className="col-span-3 bg-gray-800 border-gray-700">
-                                <SelectValue placeholder="Select Job type" />
+                                <SelectValue placeholder="Select Location Type" />
                             </SelectTrigger>
                             <SelectContent className="bg-gray-800 border-gray-700">
                                 <SelectItem value="On-site">On-site</SelectItem>
@@ -119,7 +119,7 @@ export default function JobDetailsDialog() {
                         </Label>
                         <Select onValueChange={handleSelectChange}>
                             <SelectTrigger className="col-span-3 bg-gray-800 border-gray-700">
-                                <SelectValue placeholder="Select Job type" />
+                                <SelectValue placeholder="Select Job Type" />
                             </SelectTrigger>
                             <SelectContent className="bg-gray-800 border-gray-700">
                                 <SelectItem value="full-time">Full-time</SelectItem>
@@ -155,6 +155,7 @@ export default function JobDetailsDialog() {
                     </div>
                 </form>
             </DialogContent>
+
         </Dialog>
     )
 }

@@ -17,8 +17,16 @@ export default function JobDetailsDialog() {
         company: "",
         location: "",
         locationtype: "",
-        type: "",
+        jobtype: "",
         description: "",
+        currency: "$",
+        maxsalary: 14500,
+        minsalary: 12000,
+        datecreated: "2/11/2025",
+        dateapplied: "2/11/2025",
+        followupdate: "5/11/2025",
+        note: "",
+        priority: "Top"
     })
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -43,7 +51,7 @@ export default function JobDetailsDialog() {
             </DialogTrigger>
             <DialogContent className="sm:max-w-[600px] bg-zinc-900 text-white border-none">
                 <DialogHeader>
-                    <DialogTitle className="sr-only">Add a New Job Application</DialogTitle>
+                    <DialogTitle className="pt-4 text-blue-400 text-2xl">Add a New Job Application</DialogTitle>
                 </DialogHeader>
                 <form onSubmit={handleSubmit} className="grid gap-4 py-4">
                     <div className="flex flex-col gap-2">
@@ -145,7 +153,7 @@ export default function JobDetailsDialog() {
                     </div>
                     <div className="flex">
                         <DialogClose asChild>
-                            <Button type="button" className="bg-red-600 text-white">
+                            <Button type="button" className="bg-red-600 text-white hover:bg-red-500">
                                 Cancel
                             </Button>
                         </DialogClose>

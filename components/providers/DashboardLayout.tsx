@@ -7,6 +7,8 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { usePathname } from "next/navigation";
+import axios from 'axios';
+import { User } from "@/lib/types";
 
 const navItems = [
     { name: "Dashboard", icon: Home, href: "/dashboard" },
@@ -20,10 +22,23 @@ export function Layout({ children }: { children: React.ReactNode }) {
     const { data: session } = useSession();
     const router = useRouter();
     const pathname = usePathname();
+    const [user, setUser] = useState<User>();
+
+    const fetchUser = async () => {
+        try {
+            const response = await axios.get('/api/user');
+            console.log("User Data", response)
+            setUser(response.data.user);
+        } catch (error) {
+            console.error('Error fetching user:', error);
+        }
+    };
+
     useEffect(() => {
         if (!session) {
             router.push("/");
         }
+        fetchUser();
     }, [session, router]);
 
     return (
@@ -49,11 +64,10 @@ export function Layout({ children }: { children: React.ReactNode }) {
                                 <Link
                                     key={item.name}
                                     href={item.href}
-                                    className={`flex items-center gap-3 px-4 py-3 rounded-lg text-lg transition-colors ${
-                                        pathname === item.href
-                                            ? "bg-zinc-800 text-blue-400"
-                                            : "text-zinc-400 hover:text-white hover:bg-zinc-800"
-                                    }`}
+                                    className={`flex items-center gap-3 px-4 py-3 rounded-lg text-lg transition-colors ${pathname === item.href
+                                        ? "bg-zinc-800 text-blue-400"
+                                        : "text-zinc-400 hover:text-white hover:bg-zinc-800"
+                                        }`}
                                     onClick={() => setIsOpen(false)}
                                 >
                                     <item.icon className="h-5 w-5" />
@@ -65,8 +79,8 @@ export function Layout({ children }: { children: React.ReactNode }) {
                         <div className="border-t border-zinc-800 pt-4 mt-auto">
                             <div className="flex items-center gap-3 px-4 pb-4">
                                 <div className="flex flex-col">
-                                    <span className="text-sm font-medium text-white">{session?.user?.name}</span>
-                                    <span className="text-xs text-zinc-400">{session?.user?.email}</span>
+                                    <span className="text-sm font-medium text-white">{user?.name}</span>
+                                    <span className="text-xs text-zinc-400">{user?.email}</span>
                                 </div>
                                 <Button
                                     size="icon"
@@ -91,11 +105,10 @@ export function Layout({ children }: { children: React.ReactNode }) {
                         <Link
                             key={item.name}
                             href={item.href}
-                            className={`flex items-center gap-3 px-4 py-3 rounded-lg text-lg transition-colors ${
-                                pathname === item.href
-                                    ? "bg-zinc-800 text-blue-400"
-                                    : "text-zinc-400 hover:text-white hover:bg-zinc-800"
-                            }`}
+                            className={`flex items-center gap-3 px-4 py-3 rounded-lg text-lg transition-colors ${pathname === item.href
+                                ? "bg-zinc-800 text-blue-400"
+                                : "text-zinc-400 hover:text-white hover:bg-zinc-800"
+                                }`}
                         >
                             <item.icon className="h-5 w-5" />
                             {item.name}
@@ -106,8 +119,8 @@ export function Layout({ children }: { children: React.ReactNode }) {
                 <div className="mt-auto border-t border-zinc-800 pt-4">
                     <div className="flex items-center gap-3 px-4 pb-4">
                         <div className="flex flex-col">
-                            <span className="text-sm font-medium text-white">{session?.user?.name}</span>
-                            <span className="text-xs text-zinc-400">{session?.user?.email}</span>
+                            <span className="text-sm font-medium text-white">{user?.name}</span>
+                            <span className="text-xs text-zinc-400">{user?.email}</span>
                         </div>
                         <Button
                             size="sm"

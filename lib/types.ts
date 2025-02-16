@@ -16,3 +16,10 @@ export interface JobApplication {
     status: 'interview' | 'applying' | 'accepted' | 'rejected' | 'offered' | 'withdrawn';
     note?: string;
 }
+
+export interface User {
+    id: number;
+    name: string;
+    email: string;
+    createdAt: string;
+}

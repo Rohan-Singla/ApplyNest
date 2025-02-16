@@ -7,17 +7,15 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { usePathname } from "next/navigation";
-import { db } from "@/app/db/drizzle";
-import { users } from "@/app/db/schemas/user";
 
 const navItems = [
-    { name: "Dashboard", icon: Home, href: "/" },
+    { name: "Dashboard", icon: Home, href: "/dashboard" },
     { name: "Applications", icon: FileText, href: "/applications" },
     { name: "Analytics", icon: BarChart2, href: "/analytics" },
     { name: "Settings", icon: Settings, href: "/settings" },
 ];
 
-export async function Layout({ children }: { children: React.ReactNode }) {
+export function Layout({ children }: { children: React.ReactNode }) {
     const [isOpen, setIsOpen] = useState(false);
     const { data: session } = useSession();
     const router = useRouter();

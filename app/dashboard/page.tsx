@@ -2,14 +2,14 @@
 
 import { motion } from "framer-motion"
 import { File, FileUser, Handshake, Search, Users } from "lucide-react"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Card, CardContent } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Layout } from "@/components/providers/DashboardLayout"
 import JobDetailsDialog from "@/components/Add-Application"
 import ApplicationTable from "@/components/Application-Table"
-import { useUser } from "@/contexts/userContext";
+import useUserStore from "@/contexts/userContext";
 
 const metrics = [
   {
@@ -40,7 +40,11 @@ const metrics = [
 
 export default function Dashboard() {
   const [searchQuery, setSearchQuery] = useState("")
-  const { user } = useUser();
+  const { user, fetchUser } = useUserStore();
+
+  useEffect(() => {
+    fetchUser();
+  }, [])
 
   const container = {
     hidden: { opacity: 0 },

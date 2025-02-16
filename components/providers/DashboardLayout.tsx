@@ -7,7 +7,7 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { usePathname } from "next/navigation";
-import { useUser } from "@/contexts/userContext";
+import useUserStore from "@/contexts/userContext";
 
 const navItems = [
     { name: "Dashboard", icon: Home, href: "/dashboard" },
@@ -21,12 +21,13 @@ export function Layout({ children }: { children: React.ReactNode }) {
     const { data: session } = useSession();
     const router = useRouter();
     const pathname = usePathname();
-    const { user } = useUser();
+    const { user, fetchUser } = useUserStore();
     
     useEffect(() => {
         if (!session) {
             router.push("/");
         }
+        fetchUser()
     }, [session, router]);
 
     return (

@@ -1,33 +1,15 @@
 "use client"
 
 import { motion } from "framer-motion"
-import { File, FileUser, Handshake, Plus, Search, User, Users } from "lucide-react"
+import { File, FileUser, Handshake, Search, Users } from "lucide-react"
 import { useState } from "react"
 import { Card, CardContent } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Layout } from "@/components/providers/DashboardLayout"
-import { useSession } from "next-auth/react"
 import JobDetailsDialog from "@/components/Add-Application"
-import {
-  Pagination,
-  PaginationContent,
-  PaginationEllipsis,
-  PaginationItem,
-  PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
-} from "@/components/ui/pagination"
-
-import {
-  Sheet,
-  SheetContent,
-  SheetDescription,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "@/components/ui/sheet"
 import ApplicationTable from "@/components/Application-Table"
+import { useUser } from "@/contexts/userContext";
 
 const metrics = [
   {
@@ -56,31 +38,10 @@ const metrics = [
   },
 ]
 
-const recentApplications = [
-  {
-    company: "Google",
-    position: "Software Engineer",
-    status: "Interview",
-    statusColor: "text-green-500 bg-green-500/10",
-    priorityColor: "text-red-500 bg-red-500/10",
-    currency: "$",
-    maxsalary: 14500,
-    minsalary: 12000,
-    datecreated: "2/11/2025",
-    dateapplied: "2/11/2025",
-    followupdate: "5/11/2025",
-    jobpostingurl: "",
-    jobdesc: "",
-    jobtype: "remote",
-    location: "USA",
-    note: "",
-    priority: "Top"
-  },
-]
-
 export default function Dashboard() {
   const [searchQuery, setSearchQuery] = useState("")
-  const { data: session } = useSession()
+  const { user } = useUser();
+
   const container = {
     hidden: { opacity: 0 },
     show: {
@@ -101,7 +62,7 @@ export default function Dashboard() {
       <motion.div initial="hidden" animate="show" variants={container} className="max-w-7xl mx-auto space-y-8">
         <div>
           <motion.h1 variants={item} className="text-2xl font-semibold text-white">
-            Welcome <span className="text-blue-400">{session?.user?.name}!</span>
+            Welcome <span className="text-blue-400">{user?.name}!</span>
           </motion.h1>
           <motion.p variants={item} className="text-gray-300 text-xl mt-3">
             Track and organize your job applications to get your Dream Job !

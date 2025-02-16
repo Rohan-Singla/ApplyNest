@@ -1,14 +1,13 @@
 "use client";
 import { Home, FileText, BarChart2, Settings, Menu, LogOut } from "lucide-react";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { usePathname } from "next/navigation";
-import axios from 'axios';
-import { User } from "@/lib/types";
+import { useUser } from "@/contexts/userContext";
 
 const navItems = [
     { name: "Dashboard", icon: Home, href: "/dashboard" },
@@ -22,23 +21,12 @@ export function Layout({ children }: { children: React.ReactNode }) {
     const { data: session } = useSession();
     const router = useRouter();
     const pathname = usePathname();
-    const [user, setUser] = useState<User>();
-
-    const fetchUser = async () => {
-        try {
-            const response = await axios.get('/api/user');
-            console.log("User Data", response)
-            setUser(response.data.user);
-        } catch (error) {
-            console.error('Error fetching user:', error);
-        }
-    };
-
+    const { user } = useUser();
+    
     useEffect(() => {
         if (!session) {
             router.push("/");
         }
-        fetchUser();
     }, [session, router]);
 
     return (

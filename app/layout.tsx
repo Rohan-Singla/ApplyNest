@@ -3,6 +3,7 @@ import { Poppins } from "next/font/google";
 import "./globals.css";
 import Providers from "@/components/providers/nextauthProvder";
 import { getSession } from "@/auth"
+import { UserProvider } from "@/contexts/userContext";
 
 const geistSans = Poppins({
   weight: ["100", "200", "300", "400", "500", "600", "700", "800"],
@@ -27,7 +28,9 @@ export default async function RootLayout({
         className={`${geistSans.className} antialiased`}
       >
         <Providers session={session}>
-          {children}
+          <UserProvider>
+            {children}
+          </UserProvider>
         </Providers>
       </body>
     </html>
